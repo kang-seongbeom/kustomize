@@ -1,0 +1,39 @@
+namespace: dev
+namePrefix: dev-
+
+resources:
+  - ../../base
+
+configMapGenerator:
+  - name: postgres-init
+    files:
+      - postgres-init.sql
+
+secretGenerator:
+  - name: ksb-postgres-user
+    type: kubernetes.io/basic-auth
+    literals:
+      - username=ksb
+      - password=1234
+
+patches:
+  - path: ./postgres-cluster-patch.yaml
+    target:
+      kind: Cluster
+      name: postgres-cluster
+  - path: ./pgbouncer-patch.yaml
+    target:
+      kind: Pooler
+      name: pgbouncer
+
+# pooler에 postgres-cluster 이름 주입. (dev prefix가 붙기 때문 주입하는게 안전)
+replacements:
+  - source:
+      kind: Cluster
+      fieldPath: metadata.name
+    targets:
+      - select:
+          kind: Pooler
+          name: pgbouncer
+        fieldPaths:
+          - spec.cluster.name

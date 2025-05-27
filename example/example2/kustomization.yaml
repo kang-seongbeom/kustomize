@@ -1,0 +1,5 @@
+configMapGenerator:
+  - name: example-configmap-2
+    literals:
+      - Foo=Bar
+      - Name=Ksb

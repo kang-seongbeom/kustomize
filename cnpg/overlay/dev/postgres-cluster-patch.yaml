@@ -1,0 +1,31 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgres-cluster
+spec:
+  bootstrap:
+    initdb:
+      database: dev
+      owner: ksb
+      postInitApplicationSQLRefs:
+        - name: dev-postgres-init
+          key: postgres-init.sql
+      secret:
+        name: ksb-postgres-user
+
+  storage:
+    pvcTemplate:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 3Gi
+      storageClassName: standard
+      volumeMode: Filesystem
+
+  postgresql:
+    parameters:
+      shared_buffers: "256MB"
+      max_connections: "100"
+
+    pg_hba: []
