@@ -1,0 +1,11 @@
+resources:
+  - postgres-cluster.yaml
+  - pgbouncer.yaml
+  - airflow/
+
+secretGenerator:
+  - name: airflow-db-user
+    type: kubernetes.io/basic-auth
+    literals:
+      - username=airflow
+      - password=1234
