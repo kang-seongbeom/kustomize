@@ -1,0 +1,29 @@
+executor: "CeleryExecutor"
+
+data:
+  metadataConnection:
+    user: airflow
+    pass: "1234"
+    protocol: postgresql
+    host: dev-pgbouncer
+    port: 5432
+    db: airflow210
+    sslmode: disable
+
+postgresql:
+  enabled: false
+
+redis:
+  enabled: true
+
+  persistence:
+    # Enable persistent volumes
+    enabled: true
+    # Volume size for worker StatefulSet
+    size: 1Gi
+    # If using a custom storageClass, pass name ref to all statefulSets here
+    storageClassName: standard
+    # Annotations to add to redis volumes
+    annotations: { }
+    # the name of an existing PVC to use
+    existingClaim:

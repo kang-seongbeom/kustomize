@@ -1,0 +1,50 @@
+namespace: dev
+namePrefix: dev-
+
+resources:
+  - ../../base
+
+secretGenerator:
+  - name: airflow-db-user
+    behavior: replace
+    type: kubernetes.io/basic-auth
+    literals:
+      - username=airflow
+      - password=123qwe
+
+patches:
+  - path: ./postgres-cluster-patch.yaml
+    target:
+      kind: Cluster
+      name: postgres-cluster
+  - path: ./pgbouncer-patch.yaml
+    target:
+      kind: Pooler
+      name: pgbouncer
+  - path: ./airflow/airflow-values-patch.yaml
+    target:
+      kind: HelmChartInflationGenerator
+      name: airflow
+
+# pooler에 postgres-cluster 이름 주입. (dev prefix가 붙기 때문 주입하는게 안전)
+replacements:
+  - source:
+      kind: Cluster
+      name: postgres-cluster
+      fieldPath: metadata.name
+    targets:
+      - select:
+          kind: Pooler
+          name: pgbouncer
+        fieldPaths:
+          - spec.cluster.name
+  - source:
+      kind: Secret
+      name: airflow-db-user
+      version: v1
+    targets:
+      - select:
+          kind: Cluster
+          name: postgres-cluster
+        fieldPaths:
+          - spec.bootstrap.initdb.secret.name

@@ -1,3 +1,0 @@
-k kustomize ./kustomize/airflow_cnpg/base/ --enable-helm > result.yaml
-
-k apply -f result.yaml

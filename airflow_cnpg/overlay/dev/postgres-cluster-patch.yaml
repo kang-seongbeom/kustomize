@@ -1,0 +1,12 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgres-cluster
+spec:
+
+  bootstrap:
+    initdb:
+      database: airflow210
+      owner: airflow
+      secret:
+        name: airflow-db-user
