@@ -10,7 +10,7 @@ spec:
       database: airflow
       owner: airflow
       secret:
-        name: ksb-postgres-user
+        name: airflow-db-user
 
   storage:
     pvcTemplate:

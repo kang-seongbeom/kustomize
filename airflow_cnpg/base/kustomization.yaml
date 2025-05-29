@@ -9,3 +9,6 @@ secretGenerator:
     literals:
       - username=airflow
       - password=1234
+
+generatorOptions:
+  disableNameSuffixHash: true

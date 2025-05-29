@@ -9,7 +9,9 @@ data:
     port: 5432
     db: airflow
     sslmode: disable
-  brokerUrl: redis://:1234@airflow-redis:6379/0
+
+postgresql:
+  enabled: false
 
 redis:
   enabled: true
@@ -25,6 +27,3 @@ redis:
     annotations: { }
     # the name of an existing PVC to use
     existingClaim:
-
-
-  password: 123qwe
