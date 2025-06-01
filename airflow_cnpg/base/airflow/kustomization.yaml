@@ -1,6 +1,5 @@
-helmCharts:
-  - name: airflow
-    repo: https://airflow.apache.org
-    version: 1.16.0
-    releaseName: airflow
-    valuesFile: values.yaml
+resources:
+  - airflow-helm.yaml
+
+generatorOptions:
+  disableNameSuffixHash: true

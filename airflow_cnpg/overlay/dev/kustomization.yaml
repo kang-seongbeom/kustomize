@@ -3,6 +3,10 @@ namePrefix: dev-
 
 resources:
   - ../../base
+  - ../../base/airflow
+
+generators:
+  - ./airflow/airflow-helm.yaml
 
 secretGenerator:
   - name: airflow-db-user
@@ -13,18 +17,14 @@ secretGenerator:
       - password=123qwe
 
 patches:
-  - path: ./postgres-cluster-patch.yaml
+  - path: ./cnpg/postgres-cluster.yaml
     target:
       kind: Cluster
       name: postgres-cluster
-  - path: ./pgbouncer-patch.yaml
+  - path: ./cnpg/pgbouncer.yaml
     target:
       kind: Pooler
       name: pgbouncer
-  - path: ./airflow/airflow-values-patch.yaml
-    target:
-      kind: HelmChartInflationGenerator
-      name: airflow
 
 # pooler에 postgres-cluster 이름 주입. (dev prefix가 붙기 때문 주입하는게 안전)
 replacements:

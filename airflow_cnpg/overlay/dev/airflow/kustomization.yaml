@@ -1,0 +1,8 @@
+resources:
+  - ../../../base/airflow
+
+patches:
+  - path: ./airflow-helm.yaml
+    target:
+      kind: HelmChartInflationGenerator
+      name: airflow

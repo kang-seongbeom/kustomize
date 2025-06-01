@@ -1,7 +1,8 @@
 resources:
-  - postgres-cluster.yaml
-  - pgbouncer.yaml
-  - airflow/
+  - ./cnpg
+
+#generators:
+#  - ./airflow/airflow-helm.yaml
 
 secretGenerator:
   - name: airflow-db-user

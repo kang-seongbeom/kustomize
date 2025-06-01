@@ -1,5 +1,5 @@
 # 빌드 및 실행 방법
-k kustomize ./kustomize/airflow_cnpg/base/ --enable-helm > result.yaml
+k kustomize ./kustomize/airflow_cnpg/run/overlay/dev --enable-helm > result.yaml
 k apply -f result.yaml
 
 # kustomization에서 Namespace 생성을 하면 안되는 이유

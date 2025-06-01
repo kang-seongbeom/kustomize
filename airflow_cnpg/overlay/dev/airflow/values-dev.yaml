@@ -1,4 +1,4 @@
-executor: "CeleryExecutor"
+executor: "CeleryKubernetesExecutor"
 
 data:
   metadataConnection:

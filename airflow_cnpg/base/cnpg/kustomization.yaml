@@ -1,0 +1,3 @@
+resources:
+  - ./pgbouncer.yaml
+  - ./postgres-cluster.yaml

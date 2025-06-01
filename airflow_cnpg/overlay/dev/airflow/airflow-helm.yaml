@@ -1,0 +1,9 @@
+apiVersion: builtin
+kind: HelmChartInflationGenerator
+metadata:
+  name: airflow
+releaseName: airflow
+name: airflow
+version: 1.16.0
+repo: https://airflow.apache.org
+valuesFile: ./airflow/values-dev.yaml # # dev 폴더 기준으로 values.yaml이 있는 위치 지정
