@@ -15,6 +15,11 @@ secretGenerator:
     literals:
       - username=ksb
       - password=1234
+  - name: ksb-postgres-super-user
+    type: kubernetes.io/basic-auth
+    literals:
+      - username=postgres
+      - password=1234
 
 patches:
   - path: ./postgres-cluster-patch.yaml
@@ -37,3 +42,6 @@ replacements:
           name: pgbouncer
         fieldPaths:
           - spec.cluster.name
+
+generatorOptions:
+  disableNameSuffixHash: true

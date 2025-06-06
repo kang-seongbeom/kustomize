@@ -1,0 +1,44 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: dev-replica-cluster
+  namespace: dev
+spec:
+  instances: 2
+
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.3-3
+
+  bootstrap:
+    pg_basebackup:
+      source: dev-postgres-cluster
+
+  replica:
+    enabled: true
+    source: dev-postgres-cluster
+
+  storage:
+    pvcTemplate:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 3Gi
+      storageClassName: standard
+      volumeMode: Filesystem
+
+  externalClusters:
+    - name: dev-postgres-cluster
+      connectionParameters:
+        host: dev-postgres-cluster-rw
+        user: streaming_replica
+        sslmode: verify-full
+      sslKey:
+        name: dev-postgres-cluster-replication
+        key: tls.key
+      sslCert:
+        name: dev-postgres-cluster-replication
+        key: tls.crt
+      sslRootCert:
+        name: dev-postgres-cluster-ca
+        key: ca.crt
+

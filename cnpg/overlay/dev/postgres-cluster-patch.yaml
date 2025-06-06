@@ -3,15 +3,24 @@ kind: Cluster
 metadata:
   name: postgres-cluster
 spec:
+  instances: 2
+
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.3-3
+
+  superuserSecret:
+    name: dev-ksb-postgres-super-user
+
+  enableSuperuserAccess: true
+
   bootstrap:
     initdb:
       database: dev
       owner: ksb
-      postInitApplicationSQLRefs:
-        - name: dev-postgres-init
-          key: postgres-init.sql
+#      postInitApplicationSQLRefs:
+#        - name: dev-postgres-init
+#          key: postgres-init.sql
       secret:
-        name: ksb-postgres-user
+        name: dev-ksb-postgres-user
 
   storage:
     pvcTemplate:
